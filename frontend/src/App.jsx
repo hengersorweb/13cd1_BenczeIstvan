@@ -16,8 +16,8 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/szobak" element={<Foglaltsag />} />
-                    <Route path="/foglaltsag" element={<TablazatSzoba />} />
-                    <Route path="/test" element={<Test />} />
+                    <Route path="/foglaltsag/:szazon" element={<TablazatSzoba />} />
+                    
                 </Routes>
             </div>
 

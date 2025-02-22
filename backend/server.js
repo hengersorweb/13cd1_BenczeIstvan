@@ -38,6 +38,7 @@ app.get('/szobak', (req, res) => {
 });
 
 // Egy adott szoba adatainak lekérése
+
 app.get('/szoba/:szazon', (req, res) => {
     const { szazon } = req.params;
     db.query('SELECT * FROM szobak WHERE szazon = ?', [szazon], (err, results) => {
@@ -46,39 +47,13 @@ app.get('/szoba/:szazon', (req, res) => {
     });
 });
 
-
-app.get("/szoba/", (req, res) => {
-    const sql = "SELECT sznev FROM `szobak` WHERE szazon = 2";
-    db.query(sql, (err, result) => {
-        if (err) return res.json(err);
-        return res.json(result)
-    })
-})
-
-
-//szobák listája
-app.get("/szobak", (req, res) => {
-    const sql = "SELECT * FROM `szobak`";
-    db.query(sql, (err, result) => {
-        if (err) return res.json(err);
-        return res.json(result)
-    })
-})
-// vendég lista
-app.get("/vendegek", (req, res) => {
-    const sql = "SELECT * FROM `vendegek`";
-    db.query(sql, (err, result) => {
-        if (err) return res.json(err);
-        return res.json(result)
-    })
-})
-
-
 //szoba foglaltsága
 
-app.get("/foglaltsag", (req, res) => {
-    const sql = "SELECT szobak.szazon, szobak.sznev, vendegek.vnev,foglalasok.erk,foglalasok.tav FROM foglalasok INNER JOIN szobak ON foglalasok.szoba = szobak.szazon INNER JOIN vendegek ON foglalasok.vendeg = vendegek.vsorsz WHERE szobak.szazon = 2 ORDER BY vendegek.vnev"
-    db.query(sql, (err, result) => {
+app.get("/foglaltsag/:szazon", (req, res) => {
+    const { szazon } = req.params;
+
+    const sql = "SELECT szobak.szazon, szobak.sznev, vendegek.vnev,foglalasok.erk,foglalasok.tav FROM foglalasok INNER JOIN szobak ON foglalasok.szoba = szobak.szazon INNER JOIN vendegek ON foglalasok.vendeg = vendegek.vsorsz WHERE szobak.szazon = ? ORDER BY vendegek.vnev"
+    db.query(sql, [szazon],  (err, result) => {
         if (err) return res.json(err);
         return res.json(result)
     })

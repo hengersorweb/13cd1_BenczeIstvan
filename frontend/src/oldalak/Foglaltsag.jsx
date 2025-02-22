@@ -1,8 +1,9 @@
-import TablazatSzoba  from "./TablazatSzoba.jsx";
-
+import Select from "./Select.jsx";
+import TablazatSzoba from "./TablazatSzoba.jsx";
 
 function Foglaltsag() {
-    return (<>
+    return (
+    <>
         <div className="container-fluid">
             <div className="row">
 
@@ -22,25 +23,9 @@ function Foglaltsag() {
                 </div>
                 <div className="col-md-6">
                     <h3>A választott fogadó:</h3>
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Szoba neve</th>
-                                <th scope="col">Ágyak száma</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <Select/>
+                    
 
-                        </tbody>
-                    </table>
-                    <h6>A házban összesen 21 fő fér el.</h6>
-                    <h6>Felszereltségük:</h6>
-                    <ol>
-                        <li>Ruhásszekrény</li>
-                        <li>Saját fürdőszoba zuhanytálca</li>
-                        <li>WC (fürdőszobával egyben)</li>
-                    </ol>
-                    <TablazatSzoba/>
                 </div>
 
             </div>

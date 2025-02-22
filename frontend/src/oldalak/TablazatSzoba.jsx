@@ -3,12 +3,13 @@ import axios from "axios";
 import '../css/App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons'
+import Select from "./Select.jsx";
 
 function TablazatSzoba() {
     const [data, setData] = useState([]);
     const formatDate = (isoString) => isoString.split("T")[0];
     useEffect(() => {
-        axios.get("http://localhost:3001/foglaltsag")
+        axios.get("http://localhost:3001/foglaltsag/" + Select.selectedRoom(szazon))    
             .then(response => setData(response.data))
             .catch(error => console.error("Hiba:", error));
     }, []);

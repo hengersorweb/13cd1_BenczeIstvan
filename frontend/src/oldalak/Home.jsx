@@ -29,17 +29,7 @@ function Home() {
                     </div>
                     <div className="col-md-4">
                         <h3>A hét törpe fogadó</h3>
-                        <table className="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Szoba neve</th>
-                                    <th scope="col">Ágyak száma</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
+                        
                         <h6>A házban összesen 21 fő fér el.</h6>
                         <h6>Felszereltségük:</h6>
                         <ol>
@@ -48,7 +38,6 @@ function Home() {
                             <li>WC (fürdőszobával egyben)</li>
                         </ol>
                       <Tablazat />
-                        <Select />
                     </div>
                 </div>
             </div>
