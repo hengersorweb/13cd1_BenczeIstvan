@@ -1,7 +1,6 @@
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Tablazat from "./Tablazat";
-import Select from "./Select.jsx";
 
 function Home() {
     return (

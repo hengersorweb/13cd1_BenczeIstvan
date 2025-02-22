@@ -1,5 +1,4 @@
 import Select from "./Select.jsx";
-import TablazatSzoba from "./TablazatSzoba.jsx";
 
 function Foglaltsag() {
     return (

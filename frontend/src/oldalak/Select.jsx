@@ -60,7 +60,8 @@ function Select() {
                             </tr>
                         </tbody>
                     </table>
-                <TablazatSzoba />
+                    <TablazatSzoba selectedRoom={selectedRoom} />
+
                 </div>
 
 
