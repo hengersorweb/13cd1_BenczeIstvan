@@ -4,32 +4,42 @@ import "../css/App.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'tachyons'
 function Select() {
-    const [data, setData] = useState([]);
-    const [selectData, setSelectedData] = useState([]);
+    const [rooms, setRooms] = useState([]);
+    const [selectedRoom, setSelectedRoom] = useState(null);
+    const [roomDetails, setRoomDetails] = useState(null);
 
     useEffect(() => {
-        axios.get("http://localhost:3001/szobak")
-            .then(response => setData(response.data))
-            .catch(error => console.error("Hiba:", error));
+        fetch('http://localhost:3001/szobak')
+            .then(res => res.json())
+            .then(data => setRooms(data));
     }, []);
-    return (
-        <div className="container-fluid col-md-6">
-            <h2 className="align-baseline text-capitalize">Szobalista</h2>
-            <label>
-                <select className="form-select"
-                    name="selectData" value={selectData}
-                    onChange={(e) => setSelectedData(e.target.value)}
-                >
-                    <option value="">Válasszon szobát</option>
-                    {data.map((data) => (
-                        <option key={data.szazon} value={data.szazon}>
-                            {data.sznev}
-                        </option>
-                    ))}
-                </select>
-            </label>
-        </div>
-    )
-}
 
+    const handleSelect = (event) => {
+        const szazon = event.target.value;
+        setSelectedRoom(szazon);
+
+        fetch(`http://localhost:3001/szoba/${szazon}`)
+            .then(res => res.json())
+            .then(data => setRoomDetails(data));
+    };
+
+    return (
+        <div>
+            <select onChange={handleSelect}>
+                <option value="">Válassz egy szobát</option>
+                {rooms.map(room => (
+                    <option key={room.szazon} value={room.szazon}>{room.sznev}</option>
+                ))}
+            </select>
+
+            {roomDetails && (
+                <div>
+                    <h3>Szoba adatai</h3>
+                    <p>ID: {roomDetails.szazon}</p>
+                    <p>Név: {roomDetails.sznev}</p>
+                </div>
+            )}
+        </div>
+    );
+}
 export default Select;
