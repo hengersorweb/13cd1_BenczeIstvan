@@ -21,7 +21,7 @@ function Foglaltsag() {
                     <p><img src="./ketagyas.jpg"   width="600px" height="400px" className="img-thumbnail" alt="turizmus" title="turizmus" /></p>
                 </div>
                 <div className="col-md-6">
-                    <h3>A hét törpe fogadó</h3>
+                    <h3>A választott fogadó:</h3>
                     <table className="table table-striped">
                         <thead>
                             <tr>

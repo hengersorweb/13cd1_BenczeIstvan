@@ -6,7 +6,6 @@ import 'tachyons'
 
 function Tablazat() {
     const [data, setData] = useState([]);
-    const [selectData, setSelectedData] = useState([]);
 
     useEffect(() => {
         axios.get("http://localhost:3001/szobak")

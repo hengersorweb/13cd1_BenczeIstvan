@@ -1,0 +1,91 @@
+import { useState, useEffect } from "react";
+
+function App() {
+  const [selectedRegio, setSelectedRegio] = useState("");
+  const [adatok, setAdatok] = useState([]); // Első lekérdezés eredményei
+
+  const [selectedRegionev, setSelectedRegionev] = useState("");
+  const [reszletek, setReszletek] = useState([]); // Második lekérdezés eredményei
+
+  // 1. Lekérdezés a régió típusa alapján
+  useEffect(() => {
+    const fetchData = async () => {
+      if (selectedRegio) {
+        try {
+          const response = await fetch(`http://localhost:3001/adatok?regio=${selectedRegio}`);
+          const data = await response.json();
+          setAdatok(data);
+        } catch (error) {
+          console.error("Hiba történt az adatok lekérésekor:", error);
+        }
+      }
+    };
+    fetchData();
+  }, [selectedRegio]);
+
+  // 2. Lekérdezés a régió neve alapján
+  useEffect(() => {
+    const fetchDetails = async () => {
+      if (selectedRegionev) {
+        try {
+          const response = await fetch(`http://localhost:3001/reszletek?regionev=${selectedRegionev}`);
+          const data = await response.json();
+          setReszletek(data);
+        } catch (error) {
+          console.error("Hiba történt a részletek lekérésekor:", error);
+        }
+      }
+    };
+    fetchDetails();
+  }, [selectedRegionev]);
+
+  return (
+    <div>
+      <h1>MySQL Select React Form - Több lekérdezés</h1>
+
+      {/* Első select - Régió típusa */}
+      <label>Válassz egy régió típust:</label>
+      <select onChange={(e) => setSelectedRegio(e.target.value)}>
+        <option value="">-- Válassz --</option>
+        <option value="tengerpart">Tengerpart</option>
+        <option value="hegyvidek">Hegyvidék</option>
+        <option value="sikvidek">Síkság</option>
+      </select>
+
+      {/* Második select - Régió neve (csak ha van első lekérdezés) */}
+      {adatok.length > 0 && (
+        <>
+          <label>Válassz egy régiót:</label>
+          <select onChange={(e) => setSelectedRegionev(e.target.value)}>
+            <option value="">-- Válassz --</option>
+            {adatok.map((item) => (
+              <option key={item.Rid} value={item.regionev}>
+                {item.regionev}
+              </option>
+            ))}
+          </select>
+        </>
+      )}
+
+      {/* Első lekérdezés eredményei */}
+      <h2>Első lekérdezés eredménye:</h2>
+      <ul>
+        {adatok.map((item) => (
+          <li key={item.Rid}>
+            {item.regionev} - {item.regio_tipusa}
+          </li>
+        ))}
+      </ul>
+
+      {/* Második lekérdezés eredményei */}
+      <h2>Második lekérdezés eredménye:</h2>
+      <ul>
+        {reszletek.map((item, index) => (
+          <li key={index}>{item.részlet_adat}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;

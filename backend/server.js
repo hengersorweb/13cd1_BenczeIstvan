@@ -21,7 +21,49 @@ app.get("/", (req, res) => {
     res.send("Fut a backend!");
 })
 
+db.connect(err => {
+    if (err) {
+        console.error('Database connection failed:', err);
+    } else {
+        console.log('Connected to MySQL');
+    }
+});
 
+// Összes szoba lekérése
+app.get('/szobak', (req, res) => {
+    db.query('SELECT * FROM szobak', (err, results) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(results);
+    });
+});
+
+// Egy adott szoba adatainak lekérése
+app.get('/szoba/:szazon', (req, res) => {
+    const { szazon } = req.params;
+    db.query('SELECT * FROM szobak WHERE szazon = ?', [szazon], (err, results) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(results[0]);
+    });
+});
+
+
+app.get("/szoba/", (req, res) => {
+    const sql = "SELECT sznev FROM `szobak` WHERE szazon = 2";
+    db.query(sql, (err, result) => {
+        if (err) return res.json(err);
+        return res.json(result)
+    })
+})
+
+
+//szobák listája
+app.get("/szobak", (req, res) => {
+    const sql = "SELECT * FROM `szobak`";
+    db.query(sql, (err, result) => {
+        if (err) return res.json(err);
+        return res.json(result)
+    })
+})
 // vendég lista
 app.get("/vendegek", (req, res) => {
     const sql = "SELECT * FROM `vendegek`";
@@ -31,19 +73,11 @@ app.get("/vendegek", (req, res) => {
     })
 })
 
-app.get("/szobak", (req, res) => {
-    const sql = "SELECT * FROM `szobak`";
-    db.query(sql, (err, result) => {
-        if (err) return res.json(err);
-        return res.json(result)
-    })
-})
-
 
 //szoba foglaltsága
 
-app.get("/szobakfoglaltsaga", (req, res) => {
-    const sql = "SELECT szobak.szazon, szobak.sznev, vendegek.vnev,foglalasok.erk,foglalasok.tav FROM foglalasok INNER JOIN szobak ON foglalasok.szoba = szobak.szazon INNER JOIN vendegek ON foglalasok.vendeg = vendegek.vsorsz WHERE szobak.szazon = 1 ORDER BY vendegek.vnev"
+app.get("/foglaltsag", (req, res) => {
+    const sql = "SELECT szobak.szazon, szobak.sznev, vendegek.vnev,foglalasok.erk,foglalasok.tav FROM foglalasok INNER JOIN szobak ON foglalasok.szoba = szobak.szazon INNER JOIN vendegek ON foglalasok.vendeg = vendegek.vsorsz WHERE szobak.szazon = 2 ORDER BY vendegek.vnev"
     db.query(sql, (err, result) => {
         if (err) return res.json(err);
         return res.json(result)
@@ -51,14 +85,7 @@ app.get("/szobakfoglaltsaga", (req, res) => {
 })
 
 
-//régió törlése
-app.delete("/torles/:id", (req, res) => {
-    const sql = "DELETE FROM `sportagak` WHERE sportagID = ?";
-    db.query(sql, [req.params.id], (err, result) => {
-        if (err) return res.json(err);
-        return res.json(result)
-    })
-})
+
 
 
 app.listen(3001, () => {

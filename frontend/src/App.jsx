@@ -4,6 +4,8 @@ import Foglaltsag from "./oldalak/Foglaltsag"
 import Home from "./oldalak/Home"
 import Menu from "./oldalak/Menu"
 import TablazatSzoba from './oldalak/TablazatSzoba';
+import Test from './oldalak/Test';
+
 
 function App() {
 
@@ -13,8 +15,9 @@ function App() {
                 <Menu />
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/foglaltsag" element={<Foglaltsag />} />
-                    <Route path="/szobafoglaltsaga" element={<TablazatSzoba />} />
+                    <Route path="/szobak" element={<Foglaltsag />} />
+                    <Route path="/foglaltsag" element={<TablazatSzoba />} />
+                    <Route path="/test" element={<Test />} />
                 </Routes>
             </div>
 
