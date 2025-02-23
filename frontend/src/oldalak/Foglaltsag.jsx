@@ -24,6 +24,7 @@ function Foglaltsag() {
                     <h3>A választott fogadó:</h3>
                     <Select/>
                     
+                    <h1>Kérem válasszon egy szobát a foglaltsági adatok megjelenítéséhez.</h1>
 
                 </div>
 
