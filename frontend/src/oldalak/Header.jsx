@@ -1,11 +1,17 @@
 import React from "react";
+import '../css/fogado.css';
+
 
 function Header() {
     return (
         <div>
-            <h1>Fogadó</h1>
-        </div>
-            );      
+                
+                    <div class="jumbotron bg-fej text-center"></div>
+            
+        
+            </div>             
+    );     
 }
+     
 
-            export default Header;
+ export default Header;
