@@ -7,22 +7,31 @@ import TablazatSzoba from "./TablazatSzoba";
 
 function Select() {
     const [rooms, setRooms] = useState([]);
-    const [selectedRoom, setSelectedRoom] = useState(""); //  Kezdetben üres
+    const [selectedRoom, setSelectedRoom] = useState(""); // Kezdetben üres
     const [roomDetails, setRoomDetails] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:3001/szobak')
-            .then(res => res.json())
-            .then(data => setRooms(data));
+        axios.get('http://localhost:3001/szobak')
+            .then(response => setRooms(response.data))
+            .catch(error => console.error("Hiba történt a szobák lekérésekor:", error));
     }, []);
 
-    const handleSelect = (event) => {
+    const handleSelect = async (event) => {
         const szazon = event.target.value;
         setSelectedRoom(szazon);
+        
+        if (!szazon) {
+            setRoomDetails(null);
+            return;
+        }
 
-        fetch(`http://localhost:3001/szoba/${szazon}`)
-            .then(res => res.json())
-            .then(data => setRoomDetails(data));
+        try {
+            const response = await axios.get(`http://localhost:3001/szoba/${szazon}`);
+            setRoomDetails(response.data);
+        } catch (error) {
+            console.error("Hiba történt a szoba adatainak lekérésekor:", error);
+            setRoomDetails(null);
+        }
     };
 
     return (
@@ -50,9 +59,7 @@ function Select() {
                             </tr>
                         </tbody>
                     </table>
-            <TablazatSzoba selectedRoom={selectedRoom} /> {/*  Biztosan renderelődik mindig */}
-
-            
+                    <TablazatSzoba selectedRoom={selectedRoom} />
                 </div>
             )}
         </div>
