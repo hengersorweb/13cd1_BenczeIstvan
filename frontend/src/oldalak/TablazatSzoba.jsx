@@ -7,6 +7,16 @@ import 'tachyons';
 function TablazatSzoba({ selectedRoom }) {
     const [data, setData] = useState(null); //  Kezdetben null, hogy az első betöltésnél is látszódjon az üzenet
     const [loading, setLoading] = useState(false);
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("hu-HU", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+      };
+    
+      
 
     useEffect(() => {
         if (!selectedRoom) {
@@ -53,8 +63,8 @@ function TablazatSzoba({ selectedRoom }) {
                             <tr key={row.szazon}>
                                 <td>{row.vnev} </td>
                                 <td>{row.sznev} </td>
-                                <td className="text-center">{row.erk} </td>
-                                <td className="text-center">{row.tav} </td>
+                                <td className="text-center">{formatDate(row.erk)} </td>
+                                <td className="text-center">{formatDate(row.tav)} </td>
                             </tr>
                         ))}
                     </tbody>
