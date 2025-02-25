@@ -56,7 +56,7 @@ app.get("/foglaltsag/:szazon", (req, res) => {
     db.query(sql, [szazon],  (err, result) => {
         if (err) return res.json(err);
         return res.json(result)
-    })
+})
 })
 
 
